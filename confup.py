@@ -1,6 +1,14 @@
 def confRead():
     with open('conf.cfg', 'r') as f:
-        conf={}
+        conf={'target': 75,
+              'hister': 3,
+              'maxInc': 8,
+              'maxIncHist': 1,
+              'maxDec': 4,
+              'maxDecHist': 1,
+              'changeThresh': 1,
+              'maxMissing': 3,
+              'window': 8}
         while True:
             try:
                 confLine = f.readline().replace('\n', '')
@@ -10,17 +18,6 @@ def confRead():
                     conf[confLine.split(':')[0]]= int(confLine.split(':')[1])
             except:
                 break
+
+
     return conf
-print(confRead())
-#try:
-#    target = conf['target']
-#    maxInc = conf['maxInc']
-#    maxIncHist = conf['maxIncHist']
-#    window = conf['window']
-#    changeThresh = conf['changeThresh']
-#    hister = conf['hister']
-#    maxDec = conf['maxDec']
-#    maxDecHist = conf['maxDecHist']
-#    maxMissing = conf['maxMissing']
-#except:
-#    print("Not valid conf file")
