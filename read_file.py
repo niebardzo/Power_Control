@@ -12,7 +12,7 @@ def read_file():
     input_data = sys.stdin.readline()
 
     if input_data:
-        print(input_data, parameter_list)
+        #print(input_data, parameter_list)
         parameter = input_data.split()
 
         for _ in range(len(parameter)):
@@ -25,7 +25,8 @@ def read_file():
         signal_quality = parameter_list[4]
 
         # checking if DL/UL
-        if dl_ul != ('DL' or 'UL'):
+        dl_ul_list = ['DL', 'UL']
+        if dl_ul not in dl_ul_list:
             raise ValueError("Invalid data")
 
         # checking BTS validity
