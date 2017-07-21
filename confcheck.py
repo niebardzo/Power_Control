@@ -8,7 +8,7 @@ def conf_check(conf):
     Output = None if everything okay. Exception risen if some parameter
     is invalid"""
 
-    default = {'target': 75,
+    default = {'target': -75,
             'hister': 3,
             'maxInc': 8,
             'maxIncHist': 1,
@@ -16,7 +16,8 @@ def conf_check(conf):
             'maxDecHist': 1,
             'changeThresh': 1,
             'maxMissing': 3,
-            'window': 8}
+            'window': 8,
+            'offset': 3}
 
     if conf['target'] < 45 or conf['target'] > 95:
         raise Exception("Invalid parameter")
