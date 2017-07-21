@@ -42,8 +42,12 @@ def read_file():
         elif int(signal_strength) not in range(-95, -44):
             raise ValueError("Signal strength out of range")
 
-        if signal_quality == '':
+        if int(signal_quality) in range(0, 6):
+            pass
+        elif signal_quality == '':
             parameter_list[4] = '5'
+        else:
+            raise ValueError("Signal quality value out of range")
 
         print(parameter_list)
 
