@@ -1,4 +1,6 @@
-def confRead():
+def conf_read():
+    """Input = config file, conf.cfg located in the same directory
+    Output = conf dictionary, overriding default configuration"""
     with open('conf.cfg', 'r') as f:
         conf = {'target': 75,
                 'hister': 3,
@@ -11,11 +13,11 @@ def confRead():
                 'window': 8}
         while True:
             try:
-                confLine = f.readline().replace('\n', '')
-                if confLine.startswith('#'):
+                conf_line = f.readline().replace('\n', '')
+                if conf_line.startswith('#'):
                     pass
                 else:
-                    conf[confLine.split(':')[0]] = int(confLine.split(':')[1])
+                    conf[conf_line.split(':')[0]] = int(conf_line.split(':')[1])
             except:
                 break
 
