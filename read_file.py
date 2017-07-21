@@ -12,7 +12,7 @@ def read_file():
     input_data = sys.stdin.readline()
 
     if input_data:
-        print(input_data, parameter_list)
+        #print(input_data, parameter_list)
         parameter = input_data.split()
 
         for _ in range(len(parameter)):
