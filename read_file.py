@@ -25,7 +25,8 @@ def read_file():
         signal_quality = parameter_list[4]
 
         # checking if DL/UL
-        if dl_ul != ('DL' or 'UL'):
+        dl_ul_list = ['DL', 'UL']
+        if dl_ul not in dl_ul_list:
             raise ValueError("Invalid data")
 
         # checking BTS validity
