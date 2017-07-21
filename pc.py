@@ -1,3 +1,4 @@
+import time
 from confup import conf_read
 from confcheck import conf_check
 from missing import missing_power
@@ -37,6 +38,7 @@ def pc():
     Phones = {}
 
     while True:
+        time.sleep(0.5)
         try:
             file_line = read_file()
         except ValueError:
@@ -50,8 +52,8 @@ def pc():
 
         dbsender(file_line)  # Sending measurement line to database
 
-        do_hand = handover_a(file_line, avg(Phones[phone][direction][0],
-                                            Phones[phone][direction][1]), conf['offset'], conf['target'])
+        do_hand = handover_a(file_line, avg(Phones[phone][direction][0],Phones[phone][direction][1]),
+                             conf['offset'], conf['target'])
         if do_hand == 1:
             pass
         elif do_hand == 2:
