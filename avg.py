@@ -8,6 +8,8 @@ def avg(power, quality):
     sum_pow = 0
     sum_qua = 0
     sum_div = 0
+    if len(power) == 0:
+        return 0, 0
     for i in range(len(power)):
         sum_pow += float(power[i]) * (2**i/2**len(power))
         sum_qua += float(quality[i]) * (2**i / 2**len(power))
@@ -26,3 +28,5 @@ print('testing', avg([-66.224, -78.55, -63.22, -75], [1.55, 6, 1.33, 2]))
 print("Expected result (-71.75, 2.32)", '\n')
 print('testing', avg([-66, -78, -63, -75, -55, -69], [1, 2, 1, 2, 3, 4]))
 print("Expected result (-66.06, 3.19)", '\n')
+print('testing', avg([], []))
+print("Expected result (0, 0)", '\n')
