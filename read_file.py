@@ -52,12 +52,10 @@ def read_file():
         else:
             raise ValueError("Signal quality value out of range")
 
-        #print(parameter_list)
-
         return parameter_list
 
     else:
         raise EOFError
 
-read_file()
+print(read_file())
 
