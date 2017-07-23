@@ -1,14 +1,7 @@
 import math
-conf = {
-'target' : -75.0,
-'hister' : 3.0,
-'maxDec' : 4.0,
-'maxInc' : 8.0,
-'maxDecHist' : 1.0,
-'maxIncHist' : 1.0
-}
 
-def worker(data,conf):
+
+def worker(data, conf):
     '''
         This function check several if statements and based on that determines
             what should be done with power, which means it returns if power should be increased (INC),
@@ -17,8 +10,7 @@ def worker(data,conf):
         Once quality scenario is chosen, function check if signal power should be increased, decreased or not changed
         and apply appropriate value to said change.
 
-    :param signal: (float,
-    :param quality:
+    :param data:
     :param conf:
     :return:
     '''
@@ -73,7 +65,6 @@ def worker(data,conf):
             value = conf['maxInc']
         else:
             value = x
-    result = (action,value)
+    result = (action ,value)
     return result
 
-print(worker((-68.66,1.4),conf))

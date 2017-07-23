@@ -22,7 +22,3 @@ def handover_a(f_line, avg_power, hister, target):
             return 3
         else:
             return 2
-
-
-print(handover_a(['DL' , 'NO', 'MAsdsa', -60, 3], -50, 7, -58))
-print(handover_a(['DL','S0', 'MAsdsa', '-60', 3], -50, 7, -58))

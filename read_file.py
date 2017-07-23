@@ -56,6 +56,3 @@ def read_file():
 
     else:
         raise EOFError
-
-print(read_file())
-
