@@ -16,8 +16,8 @@ def handover_a(f_line, avg_power, hister, target):
     if cell == 'S0':
         return 1
     else:
-        dist_s0 = fabs(avg_power) + fabs(hister) - fabs(target)
-        dist_nx = fabs(target) - fabs(float(f_line[3]))
+        dist_s0 = abs(avg_power) + abs(hister) - abs(target)
+        dist_nx = abs(target) - abs(float(f_line[3]))
         if fabs(dist_nx) < fabs(dist_s0):
             return 3
         else:
