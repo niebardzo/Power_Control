@@ -1,15 +1,5 @@
 import math
 
-conf = {'target': -75,
-                'hister': 3,
-                'maxInc': 8,
-                'maxIncHist': 1,
-                'maxDec': 4,
-                'maxDecHist': 1,
-                'changeThresh': 1,
-                'maxMissing': 3,
-                'window': 8,
-                'offset':3}
 
 def worker(data, conf):
     """
@@ -77,5 +67,3 @@ def worker(data, conf):
             value = x
     result = (action, value)
     return result
-
-print(worker((-78,2),conf))
