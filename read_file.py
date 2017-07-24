@@ -1,14 +1,13 @@
-
 def read_file(input_data):
+
     """
     Function reads the input signal data and filters it to check if given input lines are valid.
     If some element in read line is invalid, the function will raise an Error
-    :return: single list of five strings from one line read from standard input
+    :param input_data: single string read from standard input
+    :return: single list of five strings with filtered and validated values
     """
 
     parameter_list = ['' for _ in range(5)]
-
-
     parameter = input_data.split()
 
     for _ in range(len(parameter)):
