@@ -29,10 +29,12 @@ def read_file(input_data):
     if bts not in bts_list:
         raise ValueError("Invalid BTS")
 
+    # checking MS validity
     for _ in ms:
         if _ not in "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM":
             raise ValueError("Invalid MS")
 
+    # signal strength filtering
     if signal_strength == 'missing':
         pass
     elif signal_strength == '':
@@ -40,6 +42,7 @@ def read_file(input_data):
     elif int(signal_strength) not in range(-95, -44):
         raise ValueError("Signal strength out of range")
 
+    # signal quality filtering
     if signal_quality == '':
         parameter_list[4] = '5'
     elif int(signal_quality) in range(0, 6):
@@ -48,5 +51,6 @@ def read_file(input_data):
         raise ValueError("Signal quality value out of range")
 
     return parameter_list
+
 
 

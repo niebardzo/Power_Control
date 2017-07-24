@@ -8,8 +8,3 @@ def request(line):
     r = requests.get('http://127.0.0.1:8000', params=buffer)
     if r.status_code != 200:
         raise ConnectionError
-
-try:
-    request(["DL", "S0","MS226","-60","4"])
-except ConnectionError:
-    print("Server is not responding.")
