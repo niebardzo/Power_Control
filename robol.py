@@ -68,6 +68,6 @@ def worker(data, conf):
     if value == '':
         pass
     else:
-        value = round(float(value),2)
+        value = round(float(value))
     result = (action, value)
     return result
