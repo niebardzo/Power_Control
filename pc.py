@@ -1,4 +1,3 @@
-import time
 import sys
 from confup import conf_read
 from missing import missing_power
@@ -8,6 +7,10 @@ from avg import avg
 from handover import handover_a
 from robol import worker
 from http_request import request
+
+
+
+
 
 
 def pc():
@@ -23,16 +26,16 @@ def pc():
 
     conf = conf_read()
     Phones = {}
-    count =0
+    count = 0
     if '-h' in sys.argv:
-        print("Handover algorithm initilized")
+        print("Handover algorithm initialized")
 
     for line in sys.stdin:
-        #time.sleep(0.5)
 
         try:
-            count+=1
-            debug("Current input line \t" + line + '\t'+str(count))
+            count += 1
+            debug("Current input line \t" + line)
+            debug("Line number %s\n" % count)
             file_line = read_file(line)
         except ValueError:
             debug("Line incorrect\n")
@@ -45,9 +48,8 @@ def pc():
 
         try:
             request(file_line)
-        except ConnectionError:
+        except:
             dbsender(file_line)  # Sending measurements to database
-
 
         if (phone in Phones) and ('-h' in sys.argv):
             do_hand = handover_a(file_line, avg(Phones[phone][direction][0], Phones[phone][direction][1]),
@@ -82,14 +84,14 @@ def pc():
         change_list = missing_power(Phones[phone][direction][0], conf['maxMissing'],
                                     Phones[phone][direction][2])
 
-        debug(" %s   %s  " %(change_list[0],change_list[1]))
+        debug("Missing power result:  %s %s \n" % (change_list[0], change_list[1]))
         Phones[phone][direction][0] = change_list[0]
         Phones[phone][direction][2] = change_list[1]
 
         debug("Current power history %s\nCurrent quality history %s"
-              "\nConsecutive missings %s\n" %(Phones[phone][direction][0],
-                                             Phones[phone][direction][1],
-                                                Phones[phone][direction][2]) )
+              "\nConsecutive missings %s\n" % (Phones[phone][direction][0],
+                                               Phones[phone][direction][1],
+                                               Phones[phone][direction][2]))
 
         # Checking for missing statements, interpolating measurements when needed
 
@@ -97,20 +99,19 @@ def pc():
 
             debug("Enough data to take an action\n")
             averages = avg(Phones[phone][direction][0], Phones[phone][direction][1])
-            debug("Average power: %s\nAverage quality:%s\n" %(averages[0],averages[1]))
+            debug("Average power: %s\nAverage quality:%s\n" % (averages[0], averages[1]))
             m_data = worker(averages, conf)
 
             # Working out command
-
 
             print("%s\t%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],
                                           m_data[0], m_data[1]))
 
             debug("Command sent: %s\t%s\t%s\t%s\t%s\n\n" % (file_line[0], file_line[1], file_line[2],
-                                          m_data[0], m_data[1]))
+                                                            m_data[0], m_data[1]))
             # Printing out command
         else:
-            print("%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],'NCH'))
+            print("%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2], 'NCH'))
             debug("Not enough data\n\n")
 
     return
@@ -122,12 +123,6 @@ def debug(something):
     if '-d' in sys.argv:
         with open('logdeb.txt', 'a') as f:
             f.write(something)
-
-
-
-
-
-
 
 
 pc()
