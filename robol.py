@@ -25,7 +25,7 @@ def worker(data, conf):
                 value = conf['maxDec']
             else:
                 action = 'DEC'
-                value = x
+                value = math.fabs(x)
         elif signal < (conf['target'] - conf['hister']):
             if x >= conf['maxInc']:
                 action = 'INC'
@@ -65,5 +65,6 @@ def worker(data, conf):
             value = conf['maxInc']
         else:
             value = x
+    value = '%.2f' % (value)
     result = (action, value)
     return result
