@@ -54,7 +54,7 @@ def worker(data, conf):
             else:
                 action = 'INC'
                 value = x
-        elif signal > conf['target']:
+        elif signal > (conf['target'] + conf['changeThresh']):
             action = 'NCH'
             value = ''
     elif quality >= 4:
