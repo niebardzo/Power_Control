@@ -1,5 +1,5 @@
 import time
-
+import sys
 from confup import conf_read
 from missing import missing_power
 from dbsender import dbsender
@@ -7,6 +7,7 @@ from read_file import read_file
 from avg import avg
 from handover import handover_a
 from robol import worker
+
 
 def pc():
     """Function takes an input file containing measurement data of signal transmission
@@ -20,37 +21,39 @@ def pc():
     Output = string"""
 
     conf = conf_read()
-
+    send_pack = []
     Phones = {}
-    while True:
+    for line in sys.stdin:
         time.sleep(0.5)
         try:
-            file_line = read_file()
+            file_line = read_file(line)
         except ValueError:
             continue
-        except EOFError:
-            break
         # Checking for input line errors
 
         phone = file_line[2]
         direction = file_line[0]
 
-        dbsender(file_line)  # Sending measurement line to database
+        if len(send_pack)<10:
+            send_pack.append(file_line)
+        else:
+            dbsender(send_pack)  # Sending measuremens to database
+            send_pack = []
 
-        # if phone in Phones:
-        #     do_hand = handover_a(file_line, avg(Phones[phone][direction][0],Phones[phone][direction][1]),
-        #                         conf['offset'], conf['target'])
-        #     if do_hand == 1:
-        #         pass
-        #     elif do_hand == 2:
-        #         continue
-        #     elif do_hand == 3:
-        #         print('%s\t%s\t%s\tHOBC' % (file_line[0], file_line[1], file_line[2]))
-        #         continue
+        if (phone in Phones) and ('-h' in sys.argv):
+            do_hand = handover_a(file_line, avg(Phones[phone][direction][0], Phones[phone][direction][1]),
+                                 conf['offset'], conf['target'])
+            if do_hand == 1:
+                pass
+            elif do_hand == 2:
+                continue
+            elif do_hand == 3:
+                print('%s\t%s\t%s\tHOBC' % (file_line[0], file_line[1], file_line[2]))
+                continue
 
-        # else:
-        #     if file_line[2].startswith('N'):
-        #         continue
+        else:
+            if file_line[1].startswith('N'):
+                continue
 
         # Checking for 'N' starting lines and possibility of Handover
 
@@ -76,6 +79,7 @@ def pc():
         m_data = worker(avg(Phones[phone][direction][0], Phones[phone][direction][1]), conf)
 
         # Working out command
+
         print("%s\t%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],
                                       m_data[0], m_data[1]))
 
