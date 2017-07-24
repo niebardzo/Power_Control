@@ -25,12 +25,3 @@ def missing_power(unresolved, m, count):
             resolved[i] = int(unresolved[i])
     return resolved, count
 
-# !!!test
-print('testing', missing_power([-50, -60, -80, 'missing'], 2, 2))
-print("Expected result ([-50,-60,-80,-95],3)", '\n')
-print('testing', missing_power([-50, -60, -80, -50], 2, 5))
-print("Expected result ([-50,-60,-80,-50],0)", '\n')
-print('testing', missing_power([-50, -60, -80, 'missing'], 2, 1))
-print("Expected result ([-50,-60,-80,-80],2)", '\n')
-print('testing', missing_power([-50, -60, -80, -50], 2, 2))
-print("Expected result ([-50,-60,-80,-50],0)", '\n')
