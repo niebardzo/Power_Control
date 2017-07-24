@@ -50,4 +50,4 @@ def read_file(input_data):
 
     return parameter_list
 
-print(read_file('DL N2 sad missing'))
+
