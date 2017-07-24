@@ -1,4 +1,5 @@
 import time
+
 from confup import conf_read
 from missing import missing_power
 from dbsender import dbsender
@@ -21,10 +22,8 @@ def pc():
     conf = conf_read()
 
     Phones = {}
-    count = 0
     while True:
         time.sleep(0.5)
-        count += 1
         try:
             file_line = read_file()
         except ValueError:
@@ -37,21 +36,21 @@ def pc():
         direction = file_line[0]
 
         dbsender(file_line)  # Sending measurement line to database
-        # try:
+
+        # if phone in Phones:
         #     do_hand = handover_a(file_line, avg(Phones[phone][direction][0],Phones[phone][direction][1]),
-        #                      conf['offset'], conf['target'])
-        # except KeyError:
-        #     print("Here 1.5")
-        #     continue
-        #
-        # if do_hand == 1:
-        #     print("here2")
-        #     pass
-        # elif do_hand == 2:
-        #     continue
-        # elif do_hand == 3:
-        #     print('%s\t%s\t%s\tHOBC' % (file_line[0], file_line[1], file_line[2]))
-        #     continue
+        #                         conf['offset'], conf['target'])
+        #     if do_hand == 1:
+        #         pass
+        #     elif do_hand == 2:
+        #         continue
+        #     elif do_hand == 3:
+        #         print('%s\t%s\t%s\tHOBC' % (file_line[0], file_line[1], file_line[2]))
+        #         continue
+
+        # else:
+        #     if file_line[2].startswith('N'):
+        #         continue
 
         # Checking for 'N' starting lines and possibility of Handover
 
@@ -74,15 +73,12 @@ def pc():
         Phones[phone][direction][2] = change_list[1]
 
         # Checking for missing statements, interpolating measurements when needed
-
         m_data = worker(avg(Phones[phone][direction][0], Phones[phone][direction][1]), conf)
-        print(m_data)
-        print(Phones[phone][direction][0], Phones[phone][direction][1], avg(Phones[phone][direction][0], Phones[phone][direction][1]))
+
         # Working out command
         print("%s\t%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],
                                       m_data[0], m_data[1]))
 
-        print(count)
         # Printing out command
 
     return
