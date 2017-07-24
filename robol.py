@@ -1,5 +1,6 @@
 import math
 
+
 def worker(data, conf):
     """
         This function check several if statements and based on that determines
@@ -33,7 +34,7 @@ def worker(data, conf):
                 action = 'INC'
                 value = x
         else:
-            if (conf['target'] - 1.0) <= signal <= (conf['target'] + 1.0):
+            if (conf['target'] - conf['changeThresh']) <= signal <= (conf['target'] + conf['changeThresh']):
                 action = 'NCH'
                 value = ''
             elif signal > conf['target']:
@@ -43,7 +44,7 @@ def worker(data, conf):
                 action = 'INC'
                 value = conf['maxIncHist']
     elif 2.0 <= quality < 4:
-        if (conf['target']) <= signal <= (conf['target'] + 1):
+        if (conf['target'] - conf['changeThresh']) <= signal <= (conf['target'] + conf['changeThresh']):
             action = 'NCH'
             value = ''
         elif signal < (conf['target'] - conf['hister']):
@@ -66,4 +67,3 @@ def worker(data, conf):
             value = x
     result = (action, value)
     return result
-
