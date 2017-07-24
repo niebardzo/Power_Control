@@ -1,7 +1,5 @@
-import sys
 
-
-def read_file():
+def read_file(input_data):
     """
     Function reads the input signal data and filters it to check if given input lines are valid.
     If some element in read line is invalid, the function will raise an Error
@@ -9,50 +7,47 @@ def read_file():
     """
 
     parameter_list = ['' for _ in range(5)]
-    input_data = sys.stdin.readline()
 
-    if input_data:
-        #print(input_data, parameter_list)
-        parameter = input_data.split()
 
-        for _ in range(len(parameter)):
-            parameter_list[_] = parameter[_]
+    parameter = input_data.split()
 
-        dl_ul = parameter_list[0]
-        bts = parameter_list[1]
-        ms = parameter_list[2]
-        signal_strength = parameter_list[3]
-        signal_quality = parameter_list[4]
+    for _ in range(len(parameter)):
+        parameter_list[_] = parameter[_]
 
-        # checking if DL/UL
-        dl_ul_list = ['DL', 'UL']
-        if dl_ul not in dl_ul_list:
-            raise ValueError("Invalid data")
+    dl_ul = parameter_list[0]
+    bts = parameter_list[1]
+    ms = parameter_list[2]
+    signal_strength = parameter_list[3]
+    signal_quality = parameter_list[4]
 
-        # checking BTS validity
-        bts_list = ['S0', 'N1', 'N2', 'N3', 'N4', 'N5', 'N6']
-        if bts not in bts_list:
-            raise ValueError("Invalid BTS")
+    # checking if DL/UL
+    dl_ul_list = ['DL', 'UL']
+    if dl_ul not in dl_ul_list:
+        raise ValueError("Invalid data")
 
-        for _ in ms:
-            if _ not in "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM":
-                raise ValueError("Invalid MS")
+    # checking BTS validity
+    bts_list = ['S0', 'N1', 'N2', 'N3', 'N4', 'N5', 'N6']
+    if bts not in bts_list:
+        raise ValueError("Invalid BTS")
 
-        if signal_strength == 'missing':
-            pass
-        elif signal_strength == '':
-            raise ValueError("Invalid signal value")
-        elif int(signal_strength) not in range(-95, -44):
-            raise ValueError("Signal strength out of range")
+    for _ in ms:
+        if _ not in "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM":
+            raise ValueError("Invalid MS")
 
-        if signal_quality == '':
-            parameter_list[4] = '5'
-        elif int(signal_quality) in range(0, 6): #jak to jest jako pierwsze to wywala blad z warunkiem z pustym polem
-            pass
-        else:
-            raise ValueError("Signal quality value out of range")
+    if signal_strength == 'missing':
+        pass
+    elif signal_strength == '':
+        raise ValueError("Invalid signal value")
+    elif int(signal_strength) not in range(-95, -44):
+        raise ValueError("Signal strength out of range")
 
-        return parameter_list
-
+    if signal_quality == '':
+        parameter_list[4] = '5'
+    elif int(signal_quality) in range(0, 6):
+        pass
     else:
-        raise EOFError
+        raise ValueError("Signal quality value out of range")
+
+    return parameter_list
+
+
