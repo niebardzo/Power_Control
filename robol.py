@@ -65,6 +65,6 @@ def worker(data, conf):
             value = conf['maxInc']
         else:
             value = x
-    value = float('%.2f' % value)
+    value = round(value,2)
     result = (action, value)
     return result
