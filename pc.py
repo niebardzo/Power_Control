@@ -7,6 +7,8 @@ from read_file import read_file
 from avg import avg
 from handover import handover_a
 from robol import worker
+from http_request import request
+
 
 def pc():
     """Function takes an input file containing measurement data of signal transmission
@@ -21,15 +23,16 @@ def pc():
 
     conf = conf_read()
     Phones = {}
-
+    count =0
     if '-h' in sys.argv:
         print("Handover algorithm initilized")
 
     for line in sys.stdin:
-        time.sleep(0.5)
+        #time.sleep(0.5)
 
         try:
-            debug("Current input line \t" + line)
+            count+=1
+            debug("Current input line \t" + line + '\t'+str(count))
             file_line = read_file(line)
         except ValueError:
             debug("Line incorrect\n")
@@ -40,7 +43,10 @@ def pc():
         phone = file_line[2]
         direction = file_line[0]
 
-        dbsender(send_pack)  # Sending measurements to database
+        try:
+            request(file_line)
+        except ConnectionError:
+            dbsender(file_line)  # Sending measurements to database
 
 
         if (phone in Phones) and ('-h' in sys.argv):
@@ -73,8 +79,10 @@ def pc():
             Phones[phone][direction][1].append(file_line[4])
         # Updating Phones dictionary with new line
 
-        change_list = missing_power(Phones[phone][direction][0],
-                                    Phones[phone][direction][2], conf["maxMissing"])
+        change_list = missing_power(Phones[phone][direction][0], conf['maxMissing'],
+                                    Phones[phone][direction][2])
+
+        debug(" %s   %s  " %(change_list[0],change_list[1]))
         Phones[phone][direction][0] = change_list[0]
         Phones[phone][direction][2] = change_list[1]
 
@@ -94,6 +102,7 @@ def pc():
 
             # Working out command
 
+
             print("%s\t%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],
                                           m_data[0], m_data[1]))
 
@@ -101,6 +110,7 @@ def pc():
                                           m_data[0], m_data[1]))
             # Printing out command
         else:
+            print("%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],'NCH'))
             debug("Not enough data\n\n")
 
     return
@@ -112,6 +122,8 @@ def debug(something):
     if '-d' in sys.argv:
         with open('logdeb.txt', 'a') as f:
             f.write(something)
+
+
 
 
 
