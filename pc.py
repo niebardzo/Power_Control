@@ -7,6 +7,7 @@ from read_file import read_file
 from avg import avg
 from handover import handover_a
 from robol import worker
+from http_request import request
 
 
 def pc():
@@ -21,24 +22,32 @@ def pc():
     Output = string"""
 
     conf = conf_read()
-    send_pack = []
     Phones = {}
+    count =0
+    if '-h' in sys.argv:
+        print("Handover algorithm initilized")
+
     for line in sys.stdin:
-        time.sleep(0.5)
+        #time.sleep(0.5)
+
         try:
+            count+=1
+            debug("Current input line \t" + line + '\t'+str(count))
             file_line = read_file(line)
         except ValueError:
+            debug("Line incorrect\n")
             continue
         # Checking for input line errors
 
+        debug("Line correct\n")
         phone = file_line[2]
         direction = file_line[0]
 
-        if len(send_pack)<10:
-            send_pack.append(file_line)
-        else:
-            dbsender(send_pack)  # Sending measuremens to database
-            send_pack = []
+        try:
+            request(file_line)
+        except ConnectionError:
+            dbsender(file_line)  # Sending measurements to database
+
 
         if (phone in Phones) and ('-h' in sys.argv):
             do_hand = handover_a(file_line, avg(Phones[phone][direction][0], Phones[phone][direction][1]),
@@ -70,22 +79,55 @@ def pc():
             Phones[phone][direction][1].append(file_line[4])
         # Updating Phones dictionary with new line
 
-        change_list = missing_power(Phones[phone][direction][0],
-                                    Phones[phone][direction][2], conf["maxMissing"])
+        change_list = missing_power(Phones[phone][direction][0], conf['maxMissing'],
+                                    Phones[phone][direction][2])
+
+        debug(" %s   %s  " %(change_list[0],change_list[1]))
         Phones[phone][direction][0] = change_list[0]
         Phones[phone][direction][2] = change_list[1]
 
+        debug("Current power history %s\nCurrent quality history %s"
+              "\nConsecutive missings %s\n" %(Phones[phone][direction][0],
+                                             Phones[phone][direction][1],
+                                                Phones[phone][direction][2]) )
+
         # Checking for missing statements, interpolating measurements when needed
-        m_data = worker(avg(Phones[phone][direction][0], Phones[phone][direction][1]), conf)
 
-        # Working out command
+        if len(Phones[phone][direction][0]) >= conf['minAmount']:
 
-        print("%s\t%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],
-                                      m_data[0], m_data[1]))
+            debug("Enough data to take an action\n")
+            averages = avg(Phones[phone][direction][0], Phones[phone][direction][1])
+            debug("Average power: %s\nAverage quality:%s\n" %(averages[0],averages[1]))
+            m_data = worker(averages, conf)
 
-        # Printing out command
+            # Working out command
+
+
+            print("%s\t%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],
+                                          m_data[0], m_data[1]))
+
+            debug("Command sent: %s\t%s\t%s\t%s\t%s\n\n" % (file_line[0], file_line[1], file_line[2],
+                                          m_data[0], m_data[1]))
+            # Printing out command
+        else:
+            print("%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],'NCH'))
+            debug("Not enough data\n\n")
 
     return
+
+
+def debug(something):
+    """Function sends information to logdeb.txt file"""
+
+    if '-d' in sys.argv:
+        with open('logdeb.txt', 'a') as f:
+            f.write(something)
+
+
+
+
+
+
 
 
 pc()

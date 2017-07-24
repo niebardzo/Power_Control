@@ -1,7 +1,7 @@
 def missing_power(unresolved, m, count):
     """
     Function interpolating missing value from measurements of power
-    with convertion to integer
+    with convert to integer
     :param unresolved: list with n data from measurements
     :param m: maximum number of missing elements to interpolate
     :param count: number of missings in previous list
@@ -12,7 +12,7 @@ def missing_power(unresolved, m, count):
     if unresolved[0] == "missing" or unresolved[0] == "":
         resolved[0] = "-95"
     if unresolved[len(unresolved)-1] == "missing" or unresolved[len(unresolved)-1] == "":
-        if 1 <= count <= m:
+        if 0 <= count <= m:
             resolved[len(resolved)-1] = int(unresolved[len(resolved)-2])
         if count > m:
             resolved[len(resolved)-1] = int(-95)

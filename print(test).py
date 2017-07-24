@@ -16,12 +16,12 @@ conf = {
 'maxIncHist' : 1.0
 }
 
-print("Testing worker:")
-print(worker((-68.66,1.4),conf))
-print("-"*30)
+#print("Testing worker:")
+#print(worker((-68.66,1.4),conf))
+#print("-"*30)
 print("Testing missing:")
-print('testing', missing_power([-50, -60, -80, 'missing'], 2, 2))
-print("Expected result ([-50,-60,-80,-95],3)", '\n')
+print('testing', missing_power([-50, -60, -80, 'missing'], 1, 0))
+print("Expected result ([-50,-60,-80,-80],1)", '\n')
 print('testing', missing_power([-50, -60, -80, -50], 2, 5))
 print("Expected result ([-50,-60,-80,-50],0)", '\n')
 print('testing', missing_power([-50, -60, -80, 'missing'], 2, 1))
@@ -30,8 +30,8 @@ print('testing', missing_power([-50, -60, -80, -50], 2, 2))
 print("Expected result ([-50,-60,-80,-50],0)", '\n')
 print("-"*30)
 print("Testing handover:")
-print(handover_a(['DL' , 'NO', 'MAsdsa', -60, 3], -50, 7, -58))
-print(handover_a(['DL','S0', 'MAsdsa', '-60', 3], -50, 7, -58))
+print(handover_a(['DL', 'NO', 'MAsdsa', '-60', '3'], (-50, 1), 7, -58))
+print(handover_a(['DL', 'S0', 'MAsdsa', '-60', '3'], (-50, 2), 7, -58))
 print("-"*30)
 print("Testing avg:")
 # !!!test

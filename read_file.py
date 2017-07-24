@@ -1,14 +1,13 @@
-
 def read_file(input_data):
+
     """
     Function reads the input signal data and filters it to check if given input lines are valid.
     If some element in read line is invalid, the function will raise an Error
-    :return: single list of five strings from one line read from standard input
+    :param input_data: single string read from standard input
+    :return: single list of five strings with filtered and validated values
     """
 
     parameter_list = ['' for _ in range(5)]
-
-
     parameter = input_data.split()
 
     for _ in range(len(parameter)):
@@ -30,10 +29,12 @@ def read_file(input_data):
     if bts not in bts_list:
         raise ValueError("Invalid BTS")
 
+    # checking MS validity
     for _ in ms:
         if _ not in "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM":
             raise ValueError("Invalid MS")
 
+    # signal strength filtering
     if signal_strength == 'missing':
         pass
     elif signal_strength == '':
@@ -41,6 +42,7 @@ def read_file(input_data):
     elif int(signal_strength) not in range(-95, -44):
         raise ValueError("Signal strength out of range")
 
+    # signal quality filtering
     if signal_quality == '':
         parameter_list[4] = '5'
     elif int(signal_quality) in range(0, 6):
@@ -49,5 +51,6 @@ def read_file(input_data):
         raise ValueError("Signal quality value out of range")
 
     return parameter_list
+
 
 
