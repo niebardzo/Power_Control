@@ -1,8 +1,8 @@
 def avg(power, quality):
     """
     Function calculates average of n last measurements of power and quality.
-    :param power: list of every power measurements
-    :param quality: list of every quality measurements
+    :param power: list of every power measurements in n power window
+    :param quality: list of every quality measurements in n quality window
     :return: two element tuple with average power and quality
     """
     sum_pow = 0
