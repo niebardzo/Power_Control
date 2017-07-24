@@ -1,5 +1,5 @@
 import sqlite3
-import time
+from datetime import datetime
 
 def dbsender(line):
     """Function is creating table in "measure_hist.db" database,
@@ -9,7 +9,7 @@ def dbsender(line):
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS HISTORY 
             (Direction text, Transmiter text, Mobile text, Power text, Quality text, Time date)''')
-    line.append(time.clock())
+    line.append(str(datetime.now()))
     c.execute("INSERT INTO HISTORY VALUES (?, ?, ?, ?, ?, ?)", line)
     conn.commit()
 
