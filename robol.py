@@ -1,5 +1,16 @@
 import math
 
+conf = {'target': -75,
+        'hister': 3,
+        'maxInc': 8,
+        'maxIncHist': 1,
+        'maxDec': 4,
+        'maxDecHist': 1,
+        'changeThresh': 1,
+        'maxMissing': 3,
+        'window': 8,
+        'offset': 3,
+        'minAmount': 4}
 
 def worker(data, conf):
     """
@@ -33,16 +44,15 @@ def worker(data, conf):
             else:
                 action = 'INC'
                 value = x
-        else:
-            if (conf['target'] - conf['changeThresh']) <= signal <= (conf['target'] + conf['changeThresh']):
-                action = 'NCH'
-                value = ''
-            elif signal > conf['target']:
-                action = 'DEC'
-                value = conf['maxDecHist']
-            elif signal < conf['target']:
-                action = 'INC'
-                value = conf['maxIncHist']
+        elif (conf['target'] - conf['changeThresh']) <= signal <= (conf['target'] + conf['changeThresh']):
+            action = 'NCH'
+            value = ''
+        elif (conf['target'] - conf['hister']) <= signal < (conf['target'] - conf['changeThresh']):
+            action = 'INC'
+            value = conf['maxIncHist']
+        elif (conf['target'] + conf['changeThresh']) < signal <= (conf['target'] + conf['hister']):
+            action = 'INC'
+            value = conf['maxIncHist']
     elif 2.0 <= quality < 4:
         if (conf['target'] - conf['changeThresh']) <= signal <= (conf['target'] + conf['changeThresh']):
             action = 'NCH'
@@ -54,6 +64,9 @@ def worker(data, conf):
             else:
                 action = 'INC'
                 value = x
+        elif (conf['target'] - conf['hister']) < signal < (conf['target'] - conf['changeThresh']):
+            action = 'INC'
+            value = conf['maxIncHist']
         elif signal > (conf['target'] + conf['changeThresh']):
             action = 'NCH'
             value = ''
@@ -63,11 +76,11 @@ def worker(data, conf):
             value = 2.0
         elif signal <= (conf['target'] - conf['maxInc']):
             value = conf['maxInc']
-        else:
+        elif (conf['target'] - conf['maxInc']) < signal < (conf['target'] - 2.0):
             value = x
-    if value == '':
-        pass
-    else:
+    if value != '':
         value = round(float(value))
     result = (action, value)
     return result
+
+print(worker((-76.8,2.67),conf))
