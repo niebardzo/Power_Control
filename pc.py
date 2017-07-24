@@ -20,7 +20,6 @@ def pc():
     Output = string"""
 
     conf = conf_read()
-    send_pack = []
     Phones = {}
 
     if '-h' in sys.argv:
@@ -28,6 +27,7 @@ def pc():
 
     for line in sys.stdin:
         time.sleep(0.5)
+
         try:
             debug("Current input line \t" + line)
             file_line = read_file(line)
@@ -35,15 +35,13 @@ def pc():
             debug("Line incorrect\n")
             continue
         # Checking for input line errors
+
         debug("Line correct\n")
         phone = file_line[2]
         direction = file_line[0]
 
-        if len(send_pack) < 10:
-            send_pack.append(file_line)
-        else:
-            dbsender(send_pack)  # Sending measurements to database
-            send_pack = []
+        dbsender(send_pack)  # Sending measurements to database
+
 
         if (phone in Phones) and ('-h' in sys.argv):
             do_hand = handover_a(file_line, avg(Phones[phone][direction][0], Phones[phone][direction][1]),
@@ -85,8 +83,10 @@ def pc():
                                              Phones[phone][direction][1],
                                                 Phones[phone][direction][2]) )
 
+        # Checking for missing statements, interpolating measurements when needed
+
         if len(Phones[phone][direction][0]) >= conf['minAmount']:
-            # Checking for missing statements, interpolating measurements when needed
+
             debug("Enough data to take an action\n")
             averages = avg(Phones[phone][direction][0], Phones[phone][direction][1])
             debug("Average power: %s\nAverage quality:%s\n" %(averages[0],averages[1]))
@@ -102,10 +102,13 @@ def pc():
             # Printing out command
         else:
             debug("Not enough data\n\n")
+
     return
 
 
 def debug(something):
+    """Function sends information to logdeb.txt file"""
+
     if '-d' in sys.argv:
         with open('logdeb.txt', 'a') as f:
             f.write(something)
