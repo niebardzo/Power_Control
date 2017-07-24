@@ -8,7 +8,6 @@ from avg import avg
 from handover import handover_a
 from robol import worker
 
-
 def pc():
     """Function takes an input file containing measurement data of signal transmission
     and sends back an information about power change. Possible commands:
@@ -23,21 +22,27 @@ def pc():
     conf = conf_read()
     send_pack = []
     Phones = {}
+
+    if '-h' in sys.argv:
+        print("Handover algorithm initilized")
+
     for line in sys.stdin:
         time.sleep(0.5)
         try:
+            debug("Current input line \t" + line)
             file_line = read_file(line)
         except ValueError:
+            debug("Line incorrect\n")
             continue
         # Checking for input line errors
-
+        debug("Line correct\n")
         phone = file_line[2]
         direction = file_line[0]
 
-        if len(send_pack)<10:
+        if len(send_pack) < 10:
             send_pack.append(file_line)
         else:
-            dbsender(send_pack)  # Sending measuremens to database
+            dbsender(send_pack)  # Sending measurements to database
             send_pack = []
 
         if (phone in Phones) and ('-h' in sys.argv):
@@ -75,17 +80,39 @@ def pc():
         Phones[phone][direction][0] = change_list[0]
         Phones[phone][direction][2] = change_list[1]
 
-        # Checking for missing statements, interpolating measurements when needed
-        m_data = worker(avg(Phones[phone][direction][0], Phones[phone][direction][1]), conf)
+        debug("Current power history %s\nCurrent quality history %s"
+              "\nConsecutive missings %s\n" %(Phones[phone][direction][0],
+                                             Phones[phone][direction][1],
+                                                Phones[phone][direction][2]) )
 
-        # Working out command
+        if len(Phones[phone][direction][0]) >= conf['minAmount']:
+            # Checking for missing statements, interpolating measurements when needed
+            debug("Enough data to take an action\n")
+            averages = avg(Phones[phone][direction][0], Phones[phone][direction][1])
+            debug("Average power: %s\nAverage quality:%s\n" %(averages[0],averages[1]))
+            m_data = worker(averages, conf)
 
-        print("%s\t%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],
-                                      m_data[0], m_data[1]))
+            # Working out command
 
-        # Printing out command
+            print("%s\t%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2],
+                                          m_data[0], m_data[1]))
 
+            debug("Command sent: %s\t%s\t%s\t%s\t%s\n\n" % (file_line[0], file_line[1], file_line[2],
+                                          m_data[0], m_data[1]))
+            # Printing out command
+        else:
+            debug("Not enough data\n\n")
     return
+
+
+def debug(something):
+    if '-d' in sys.argv:
+        with open('logdeb.txt', 'a') as f:
+            f.write(something)
+
+
+
+
 
 
 pc()
