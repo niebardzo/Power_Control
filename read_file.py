@@ -42,6 +42,11 @@ def read_file(input_data):
     elif int(signal_strength) not in range(-95, -44):
         raise ValueError("Signal strength out of range")
 
+    if bts.startswith('N') and dl_ul == 'UL':
+        raise ValueError("Impossibruuuuu")
+
+
+
     # signal quality filtering
     if signal_quality == '':
         parameter_list[4] = '5'

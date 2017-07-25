@@ -45,16 +45,17 @@ def pc():
         phone = file_line[2]
         direction = file_line[0]
 
-        if len(pack)<50:
-            pack.append(file_line)
-        else:
-            try:
-                for item in pack:
-                    request(item)
-                pack = []
-            except:
-                dbsender(pack)       # Sending measurements to database
-                pack = []
+        if '-db' in sys.argv:
+            if len(pack)<50:
+                pack.append(file_line)
+            else:
+                try:
+                    for item in pack:
+                        request(item)
+                    pack = []
+                except:
+                    dbsender(pack)       # Sending measurements to database
+                    pack = []
 
         if (phone in Phones) and ('-h' in sys.argv) and len(Phones[phone][direction][0])>=conf['minAmount']:
             do_hand = handover_a(file_line, avg(Phones[phone][direction][0], Phones[phone][direction][1]),
@@ -119,13 +120,14 @@ def pc():
             print("%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2], 'NCH'))
             debug("Not enough data\n\n")
 
-    try:
-        for item in pack:
-            request(item)
-    except:
-        dbsender(pack)  # Sending measurements to database
-    end =time.clock()
-    print("Finished in",(end-start))
+    if '-db' in sys.argv:
+        try:
+            for item in pack:
+                request(item)
+        except:
+            dbsender(pack)  # Sending measurements to database
+    end = time.clock()
+    print("Finished in", (end-start))
     return
 
 
