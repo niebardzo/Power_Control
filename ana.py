@@ -4,8 +4,8 @@ import sys
 def tcpfilter(file):
     ok200 = 0
     gethttp = 0
-    with open(file, 'r'):
-        for line in file:
+    with open(file, 'r') as string:
+        for line in string:
             if ('GET' in str(line)) and ('HTTP' in str(line)):
                 gethttp += 1
             elif '200 OK' in str(line):
