@@ -4,6 +4,15 @@ import sys
 
 
 def db_read(start, end, ms):
+    """Function connects to database with measurements history and fetch data from it,
+    data is initially filtered by SQL querry and then filtered again, due to python3
+    well implemented string comparison
+    Input:
+    start - beginning of time window
+    end - end of time window
+    ms - mobile station alias
+
+    Output = graphical representation of measurements"""
     conn = sqlite3.connect("measure_hist.db")
     c = conn.cursor()
     c.execute("SELECT Direction, Power, Time FROM HISTORY "
