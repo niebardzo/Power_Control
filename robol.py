@@ -9,10 +9,10 @@ def worker(data, conf):
         Firstly, it checks quality of signal and based on that follows one of three possible scenarios.
         Once quality scenario is chosen, function checks if signal power should be increased, decreased or not changed
         and apply appropriate value to said change.
-    :param signal: (float, 0 index of input tuple)
-    :param quality: (float, 1 index of input tuple)
+    :param data: tuple of two floats
     :param conf: variable input, can be edited
-    :return: tuple
+    :return: tuple of two elements, the first of them being of str type and the second of str type if no change
+            is applied or of int type if change is applied.
     """
 
     signal = data[0]
