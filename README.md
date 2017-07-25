@@ -28,10 +28,12 @@ https://bitbucket.org/pat049b/mops_power_control
 #2.3. Installation instructions
 
 Download all the files from link provided in previous section. Unzip them all into one directory, shell command for unzipping:
-unzip <file name>.zip -d <directory>
+
+    unzip <file name>.zip -d <directory>
 
 If unzip library is not installed on your system, run:
-sudo apt-get install unzip.
+
+    sudo apt-get install unzip.
 
 Files  being in another directory may cause necessity to provide absolute path to them.
 No installation is required, script is interpreted by shell built-in interpreter. Program can be run from terminal.
@@ -39,9 +41,11 @@ No installation is required, script is interpreted by shell built-in interpreter
 #2.3.1. Required libraries
 
 Matplotlib - library is required for grapher.py to draw charts. Installation can be run by:
-pip-python3 matplotlib
-or
-apt-get install python3-matplotlib
+
+    pip-python3 matplotlib
+    or
+    apt-get install python3-matplotlib
+
 Requests -  required for http server. Installation instruction on: http://docs.python-requests.org/en/master/
 
 #3. User interface
@@ -66,28 +70,28 @@ Algorithm takes input through stdin. Required input line is structured this way:
 
 XL	XX	XXXX	num1	num2
 
-Where:
-XL - indicates direction of transmission (UL or DL)
-XX - BTS number (S0 for current cell, N1-6 for neighbour)
-XXXX - Mobile station name (any string without special signs)
-Num1 - power level
-Num2 - quality level
+    Where:
+    XL - indicates direction of transmission (UL or DL)
+    XX - BTS number (S0 for current cell, N1-6 for neighbour)
+    XXXX - Mobile station name (any string without special signs)
+    Num1 - power level
+    Num2 - quality level
 
 #3.3.1. Configuration
 
 Algorithm has default configuration parameters:
 
-target:-75    --> Setting target power in dBm
-hister:3      --> histeresy threshold
-maxInc:8      --> Maximum power increase
-maxIncHist:1  --> Maximum power increase inside hysteresis area
-maxDec:4      --> Maximum power decrease
-maxDecHist:1  --> Maximum power decrease inside hysteresis area
-changeThresh:1--> Threshold of change
-maxMissing:3  --> Maximum number of missing signals before\ launching MaxPower mode
-window:8      --> Number of measurements included in calculations
-offset:3      --> Minimum difference between current cell power\ and neighbour
-minAmount:4   --> Minimum amount of measurements to start PC
+    target:-75    --> Setting target power in dBm
+    hister:3      --> histeresy threshold
+    maxInc:8      --> Maximum power increase
+    maxIncHist:1  --> Maximum power increase inside hysteresis area
+    maxDec:4      --> Maximum power decrease
+    maxDecHist:1  --> Maximum power decrease inside hysteresis area
+    changeThresh:1--> Threshold of change
+    maxMissing:3  --> Maximum number of missing signals before\ launching MaxPower mode
+    window:8      --> Number of measurements included in calculations
+    offset:3      --> Minimum difference between current cell power\ and neighbour
+    minAmount:4   --> Minimum amount of measurements to start PC
 
 These settings can be customized. Customization process is described in section                3.5. “Additional Features”.
 
@@ -96,9 +100,10 @@ These settings can be customized. Customization process is described in section 
 There are few options for getting an output. Script output is printed by default in standard output in a terminal:
 
 >>> cat input.txt | python3 pc.py
-Loading default configuration
-DL    S0      MS222    NCH
-UL    S0      MS222    NCH
+
+    Loading default configuration
+    DL    S0      MS222    NCH
+    UL    S0      MS222    NCH
 
 
 #3.4.1. Printing the output to a file
@@ -106,7 +111,7 @@ UL    S0      MS222    NCH
 Commands are always printed in terminal, they can be also redirected to a file by using
 > file_name at the end of a terminal command:
 
->>> cat input.txt | python pc.py > output.txt
+    >>> cat input.txt | python pc.py > output.txt
 
 #3.4.2. Database
 
@@ -122,7 +127,8 @@ There is a possibility to visualize measurement data for specified mobile statio
 #3.5.1. User configuration
 
 User is able to override default configuration of an algorithm. To do so, additional flag should be
-	Flag:    -c
+Flag:    -c
+
 	Invoke example:
     cat input.txt | python3 pc.py -h -c
     cat input.txt | python3 pc.py -c
@@ -133,9 +139,10 @@ Feature description: Overrides default configuration with one specified in conf.
 
 Handover algorithm:
 Flag:    -h
+
 	Invoke example:
-cat input.txt | python3 pc.py -h -c
-cat input.txt | python3 pc.py -h
+    cat input.txt | python3 pc.py -h -c
+    cat input.txt | python3 pc.py -h
 
 Feature description: When neighbour cell measurement received, algorithm is comparing signal power of S0 cell with signal power of neighbour. Sends HOBC (Handover Better Cell) signal if handover is profitable.
 
@@ -148,35 +155,35 @@ Feature description: When neighbour cell measurement received, algorithm is comp
 
 Feature description: Creates log for debugging purposes in logdeb.txt. Debugger appends information to this file. In order to wipe logs out, manual deletion of file is required. Example log from one input line:
 
-Current input line  UL S0 MS776 -78 2
-Line correct
-Current power history [-78, -75, -70, -70, -78]
-Current quality history ['2', '2', '1', '1', '2']
-Consecutive missings 0
-Enough data to take an action
-Average power: -74.71
-Average quality:1.61
-Command sent: UL   S0 MS776  NCH
+    Current input line  UL S0 MS776 -78 2
+    Line correct
+    Current power history [-78, -75, -70, -70, -78]
+    Current quality history ['2', '2', '1', '1', '2']
+    Consecutive missings 0
+    Enough data to take an action
+    Average power: -74.71
+    Average quality:1.61
+    Command sent: UL   S0 MS776  NCH
 
 #3.5.4. Plotter
 
 Flag: none - plotter is a separate application, using data in database to visualize history of power levels downlink and uplink for certain mobile station in specified time window.
 
 	Invoke example:
-python3 grapher.py ‘2017-07-20 20:00’ ‘2017-07-21 22:00’ ‘MS111’
+    python3 grapher.py ‘2017-07-20 20:00’ ‘2017-07-21 22:00’ ‘MS111’
 
 After name of script (grapher.py), two following dates are beginning and end of time window.
 
-Date format: ‘YYYY-MM-DD HH:MiMi:SS.SsSsSs’
-where:
+    Date format: ‘YYYY-MM-DD HH:MiMi:SS.SsSsSs’, where:
 	Y - year, M - month, D - day
     H - hour, Mi - minute, S - seconds, Ss - parts of second
 
 Provided dates accuracy does not matter.
 The last parameter is a name of mobile station to be displayed.
 
-Plotter uses matplotlib library, which must be downloaded previously. Installation on
-Ubuntu/Debian systems can be executed by command:
+Plotter uses matplotlib library, which must be downloaded previously.
+
+    Installation on Ubuntu/Debian systems can be executed by command:
     sudo apt-get install python3-matplotlib or
     pip-python3 matplotlib
 
@@ -185,7 +192,7 @@ Ubuntu/Debian systems can be executed by command:
 #3.5.5 HTTP communication
 
 To establish Http server user need to launch it before launching whole application.
-Steps to do that:
+    Steps to do that:
     1)Go to project directory
     2)Launch http_server.py in python3 interpreter in separate console by command:
     python3 http_server.py
