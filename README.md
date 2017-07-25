@@ -201,6 +201,18 @@ To establish Http server user need to launch it before launching whole applicati
 
 It may happen that your environment doesn’t have requests lib which is necessary for properly working HTTP communication. To get requests lib please find attached producent website: http://docs.python-requests.org/en/master/
 
+#3.5.6 Parser to analyze TCPDUMP
+
+Flag: none - parser is a separate application, using data from tcpdump aplication to visualize history of communication with HTTP server.
+
+    Steps to start:
+    Start HTTP server - see 9.6 HTTP communication
+    Start a new terminal
+
+    Invoke example:
+    tcpdump -A -v -i <interface> > <file_name>
+    python3 ana.py <file_name>
+
 #4. Reporting problems
 
 If you encounter any issues with MOPS Power Control, please report them to our project manager at: patryk.bogusz@ust-global.com
