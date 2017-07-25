@@ -143,8 +143,8 @@ Feature description: When neighbour cell measurement received, algorithm is comp
 
 	Flag:    -d
 	Invoke example:
-cat input.txt | python3 pc.py -d -h
-cat input.txt | python3 pc.py -d
+    cat input.txt | python3 pc.py -d -h
+    cat input.txt | python3 pc.py -d
 
 Feature description: Creates log for debugging purposes in logdeb.txt. Debugger appends information to this file. In order to wipe logs out, manual deletion of file is required. Example log from one input line:
 
@@ -166,30 +166,31 @@ Flag: none - plotter is a separate application, using data in database to visual
 python3 grapher.py ‘2017-07-20 20:00’ ‘2017-07-21 22:00’ ‘MS111’
 
 After name of script (grapher.py), two following dates are beginning and end of time window.
-Date format: ‘YYYY-MM-DD HH:MiMi:SS.SsSsSs’ where:
+
+Date format: ‘YYYY-MM-DD HH:MiMi:SS.SsSsSs’
+where:
 	Y - year, M - month, D - day
-H - hour, Mi - minute, S - seconds, Ss - parts of second
+    H - hour, Mi - minute, S - seconds, Ss - parts of second
 
 Provided dates accuracy does not matter.
 The last parameter is a name of mobile station to be displayed.
 
 Plotter uses matplotlib library, which must be downloaded previously. Installation on
 Ubuntu/Debian systems can be executed by command:
-sudo apt-get install python3-matplotlib or
-pip-python3 matplotlib
+    sudo apt-get install python3-matplotlib or
+    pip-python3 matplotlib
 
-Example figure:
 
 
 #3.5.5 HTTP communication
 
 To establish Http server user need to launch it before launching whole application.
 Steps to do that:
-    1)  Go to project directory
-    2)  Launch http_server.py in python3 interpreter in separate console by command:
-		    python3 http_server.py
-    3)  Now your server is working in separate console.
-    4)  Run your program in another console and communication with HTTP in server is established now. If you skip steps 1-3 your program is sending data to database directly.
+    1)Go to project directory
+    2)Launch http_server.py in python3 interpreter in separate console by command:
+    python3 http_server.py
+    3)Now your server is working in separate console.
+    4)Run your program in another console and communication with HTTP in server is established now. If you skip steps 1-3 your program is sending data to database directly.
 
 It may happen that your environment doesn’t have requests lib which is necessary for properly working HTTP communication. To get requests lib please find attached producent website: http://docs.python-requests.org/en/master/
 
