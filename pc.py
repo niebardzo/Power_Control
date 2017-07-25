@@ -1,5 +1,7 @@
 import sys
 import time
+from http_request import request
+
 from confup import conf_read
 from missing import missing_power
 from dbsender import dbsender
@@ -7,11 +9,6 @@ from read_file import read_file
 from avg import avg
 from handover import handover_a
 from robol import worker
-from http_request import request
-
-
-
-
 
 
 def pc():
@@ -24,7 +21,7 @@ def pc():
 
     Input = file
     Output = string"""
-
+    start = time.clock()
     conf = conf_read()
     Phones = {}
     count = 0
@@ -52,14 +49,16 @@ def pc():
             pack.append(file_line)
         else:
             try:
-                request(pack)
+                for item in pack:
+                    request(item)
+                pack = []
             except:
                 dbsender(pack)       # Sending measurements to database
-            pack = []
+                pack = []
 
-        if (phone in Phones) and ('-h' in sys.argv):
+        if (phone in Phones) and ('-h' in sys.argv) and len(Phones[phone][direction][0])>=conf['minAmount']:
             do_hand = handover_a(file_line, avg(Phones[phone][direction][0], Phones[phone][direction][1]),
-                                 conf['offset'], conf['target'])
+                                 conf['offset'])
             if do_hand == 1:
                 pass
             elif do_hand == 2:
@@ -120,7 +119,13 @@ def pc():
             print("%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2], 'NCH'))
             debug("Not enough data\n\n")
 
-    dbsender(pack)
+    try:
+        for item in pack:
+            request(item)
+    except:
+        dbsender(pack)  # Sending measurements to database
+    end =time.clock()
+    print("Finished in",(end-start))
     return
 
 
@@ -130,6 +135,5 @@ def debug(something):
     if '-d' in sys.argv:
         with open('logdeb.txt', 'a') as f:
             f.write(something)
-
 
 pc()
