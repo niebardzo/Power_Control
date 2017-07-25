@@ -1,5 +1,5 @@
 import http.server
-from dbsender import dbsender
+from dbsenderhttp import dbsenderhttp
 import urllib.parse
 
 
@@ -12,7 +12,7 @@ class SimpleHTTPRequestHandler1(http.server.SimpleHTTPRequestHandler):
         for i in buff:
             a = i.split('=')
             buffer.append(a[1])
-        dbsender(buffer)
+        dbsenderhttp(buffer)
         return super(SimpleHTTPRequestHandler1, self).do_GET()
 
 
