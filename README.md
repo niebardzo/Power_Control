@@ -125,8 +125,7 @@ There is a possibility to visualize measurement data for specified mobile statio
 
 #3.5.1. User configuration
 
-User is able to override default configuration of an algorithm. To do so, additional flag should be
-Flag: -c
+User is able to override default configuration of an algorithm. To do so, additional flag should be Flag: -c
 
 	Invoke example:
     cat input.txt | python3 pc.py -h -c
@@ -147,7 +146,8 @@ Feature description: When neighbour cell measurement received, algorithm is comp
 
 #3.5.3. Debugger
 
-	Flag: -d
+Flag: -d
+
 	Invoke example:
     cat input.txt | python3 pc.py -d -h
     cat input.txt | python3 pc.py -d
