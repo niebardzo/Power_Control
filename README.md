@@ -1,4 +1,4 @@
-1. Introduction
+#1. Introduction
 1.1. What is MOPS Power Control?
 
 MOPS Power Control is an application that adjusts the transmitting power of Base Transceiver Station (BTS) and Mobile Station (MS) based on measurement reports of BTS and MS.
@@ -17,7 +17,7 @@ HTTP communication
 Plotter
 
 In order to use extra features, additional flags provided at terminal launching are required. See Section 3.5. "Additional features" for details
-2. Installation of MOPS Power Control
+#2. Installation of MOPS Power Control
 
 Before installing MOPS Power Control make sure that your operating system is Linux
 2.1. System requirements
@@ -44,7 +44,7 @@ or
 apt-get install python3-matplotlib
 Requests -  required for http server. Installation instruction on: http://docs.python-requests.org/en/master/
 
-3. User interface
+#3. User interface
 3.1. Introduction
 
 By now you should have MOPS Power Control application ready to work on your computer. In the next chapters we will explore:
@@ -77,17 +77,17 @@ Num2 - quality level
 
 Algorithm has default configuration parameters:
 
-# target:-75    --> Setting target power in dBm
-# hister:3      --> histeresy threshold
-# maxInc:8      --> Maximum power increase
-# maxIncHist:1  --> Maximum power increase inside hysteresis area
-# maxDec:4      --> Maximum power decrease
-# maxDecHist:1  --> Maximum power decrease inside hysteresis area
-# changeThresh:1--> Threshold of change
-# maxMissing:3  --> Maximum number of missing signals before\ launching MaxPower mode
-# window:8      --> Number of measurements included in calculations
-# offset:3      --> Minimum difference between current cell power\ and neighbour
-# minAmount:4   --> Minimum amount of measurements to start PC
+target:-75    --> Setting target power in dBm
+hister:3      --> histeresy threshold
+maxInc:8      --> Maximum power increase
+maxIncHist:1  --> Maximum power increase inside hysteresis area
+maxDec:4      --> Maximum power decrease
+maxDecHist:1  --> Maximum power decrease inside hysteresis area
+changeThresh:1--> Threshold of change
+maxMissing:3  --> Maximum number of missing signals before\ launching MaxPower mode
+window:8      --> Number of measurements included in calculations
+offset:3      --> Minimum difference between current cell power\ and neighbour
+minAmount:4   --> Minimum amount of measurements to start PC
 
 These settings can be customized. Customization process is described in section                3.5. “Additional Features”.
 
@@ -193,7 +193,7 @@ Launch http_server.py in python3 interpreter in separate console by command:
 
 It may happen that your environment doesn’t have requests lib which is necessary for properly working HTTP communication. To get requests lib please find attached producent website: http://docs.python-requests.org/en/master/
 
- 4. Reporting problems
+#4. Reporting problems
 
 If you encounter any issues with MOPS Power Control, please report them to our project manager at: patryk.bogusz@ust-global.com
 
