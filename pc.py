@@ -1,4 +1,5 @@
 import sys
+import time
 from confup import conf_read
 from missing import missing_power
 from dbsender import dbsender
@@ -27,6 +28,7 @@ def pc():
     conf = conf_read()
     Phones = {}
     count = 0
+    pack =[]
     if '-h' in sys.argv:
         print("Handover algorithm initialized")
 
@@ -46,10 +48,14 @@ def pc():
         phone = file_line[2]
         direction = file_line[0]
 
-        try:
-            request(file_line)
-        except:
-            dbsender(file_line)  # Sending measurements to database
+        if len(pack)<50:
+            pack.append(file_line)
+        else:
+            try:
+                request(pack)
+            except:
+                dbsender(pack)       # Sending measurements to database
+            pack = []
 
         if (phone in Phones) and ('-h' in sys.argv):
             do_hand = handover_a(file_line, avg(Phones[phone][direction][0], Phones[phone][direction][1]),
@@ -114,6 +120,7 @@ def pc():
             print("%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2], 'NCH'))
             debug("Not enough data\n\n")
 
+    dbsender(pack)
     return
 
 
