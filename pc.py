@@ -32,7 +32,9 @@ def pc():
     for line in sys.stdin:
 
         try:
+
             count += 1
+            #print(count)
             debug("Current input line \t" + line)
             debug("Line number %s\n" % count)
             file_line = read_file(line)
@@ -119,7 +121,6 @@ def pc():
         else:
             print("%s\t%s\t%s\t%s" % (file_line[0], file_line[1], file_line[2], 'NCH'))
             debug("Not enough data\n\n")
-
     if '-db' in sys.argv:
         try:
             for item in pack:
