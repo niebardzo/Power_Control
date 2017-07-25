@@ -99,7 +99,7 @@ These settings can be customized. Customization process is described in section 
 
 There are few options for getting an output. Script output is printed by default in standard output in a terminal:
 
->>> cat input.txt | python3 pc.py
+    cat input.txt | python3 pc.py
 
     Loading default configuration
     DL    S0      MS222    NCH
@@ -108,10 +108,9 @@ There are few options for getting an output. Script output is printed by default
 
 #3.4.1. Printing the output to a file
 
-Commands are always printed in terminal, they can be also redirected to a file by using
-> file_name at the end of a terminal command:
+Commands are always printed in terminal, they can be also redirected to a file by using file_name at the end of a terminal command:
 
-    >>> cat input.txt | python pc.py > output.txt
+    cat input.txt | python pc.py > output.txt
 
 #3.4.2. Database
 
@@ -127,7 +126,7 @@ There is a possibility to visualize measurement data for specified mobile statio
 #3.5.1. User configuration
 
 User is able to override default configuration of an algorithm. To do so, additional flag should be
-Flag:    -c
+Flag: -c
 
 	Invoke example:
     cat input.txt | python3 pc.py -h -c
@@ -138,7 +137,7 @@ Feature description: Overrides default configuration with one specified in conf.
 #3.5.2. Handover
 
 Handover algorithm:
-Flag:    -h
+Flag: -h
 
 	Invoke example:
     cat input.txt | python3 pc.py -h -c
@@ -148,7 +147,7 @@ Feature description: When neighbour cell measurement received, algorithm is comp
 
 #3.5.3. Debugger
 
-	Flag:    -d
+	Flag: -d
 	Invoke example:
     cat input.txt | python3 pc.py -d -h
     cat input.txt | python3 pc.py -d
@@ -192,6 +191,7 @@ Plotter uses matplotlib library, which must be downloaded previously.
 #3.5.5 HTTP communication
 
 To establish Http server user need to launch it before launching whole application.
+
     Steps to do that:
     1)Go to project directory
     2)Launch http_server.py in python3 interpreter in separate console by command:
