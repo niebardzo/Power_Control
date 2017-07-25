@@ -18,7 +18,7 @@ def handover_a(f_line, avg_power, hister):
     elif f_line[3] == "missing" or f_line == "":
         return 2
     else:
-        dist_s0 = fabs(avg_power[0]) + fabs(hister)
+        dist_s0 = fabs(avg_power[0]) - fabs(hister)
         dist_nx = fabs(float(f_line[3]))
         if fabs(dist_nx) < fabs(dist_s0):
             return 3
