@@ -58,12 +58,13 @@ def worker(data, conf):
             value = ''
     elif quality >= 4:
         action = 'INC'
-        if signal >= (conf['target'] - 2.0):
+        if signal > (conf['target'] - conf['hister']):
             value = 2.0
-        elif signal <= (conf['target'] - conf['maxInc']):
-            value = conf['maxInc']
-        elif (conf['target'] - conf['maxInc']) < signal < (conf['target'] - 2.0):
-            value = x
+        elif signal <= (conf['target'] - conf['hister']):
+            if x >= conf['maxInc']:
+                value = conf['maxInc']
+            else:
+                value = x
     if value != '':
         value = round(float(value))
     result = (action, value)
