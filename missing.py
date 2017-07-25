@@ -11,14 +11,14 @@ def missing_power(unresolved, m, count):
     resolved = [0 for _ in range(len(unresolved))]
     if unresolved[0] == "missing" or unresolved[0] == "":
         resolved[0] = "-95"
-    if unresolved[len(unresolved)-1] == "missing" or unresolved[len(unresolved)-1] == "":
-        if 0 <= count <= m:
-            resolved[len(resolved)-1] = int(unresolved[len(resolved)-2])
-        if count > m:
-            resolved[len(resolved)-1] = int(-95)
+    if unresolved[-1] == "missing" or unresolved[-1] == "":
+        if 0 <= count < m:
+            resolved[-1] = int(unresolved[-2])
+        if count >= m:
+            resolved[-1] = int(-95)
         count += 1
     else:
-        resolved[len(resolved) - 1] = int(unresolved[len(resolved)-1])
+        resolved[-1] = int(unresolved[-1])
         count = 0
 
     for i in range(len(unresolved)-1):
