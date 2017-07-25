@@ -17,4 +17,4 @@ def avg(power, quality):
     avg_pow = sum_pow / sum_div
     avg_qua = sum_qua / sum_div
 
-    return round(avg_pow, 5), round(avg_qua, 5)
+    return avg_pow, avg_qua
