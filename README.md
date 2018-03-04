@@ -1,13 +1,13 @@
-#1. Introduction
-#1.1. What is MOPS Power Control?
+# 1. Introduction
+# 1.1. What is MOPS Power Control?
 
 MOPS Power Control is an application that adjusts the transmitting power of Base Transceiver Station (BTS) and Mobile Station (MS) based on measurement reports of BTS and MS.
 
-#1.2.  Purposes of the MOPS Power Control
+# 1.2.  Purposes of the MOPS Power Control
 
 Main purposes of MOPS Power Control application are saving power of MS, BTS and also increasing the quality of the network connection by reducing the interference of the network.
 
-#1.3. Features
+# 1.3. Features
 
 MOPS Power Control offers some extra features, allowing the user to:
 Override default configuration
@@ -17,15 +17,15 @@ HTTP communication
 Plotter
 
 In order to use extra features, additional flags provided at terminal launching are required. See Section 3.5. "Additional features" for details
-#2. Installation of MOPS Power Control
+# 2. Installation of MOPS Power Control
 
 Before installing MOPS Power Control make sure that your operating system is Linux
-#2.1. System requirements
+# 2.1. System requirements
 
 For the application to work correctly you should have Python 3.6.1 interpreter installed on your machine and Linux operating system.
-#2.2. Where to get MOPS Power Control?
+# 2.2. Where to get MOPS Power Control?
 https://bitbucket.org/pat049b/mops_power_control
-#2.3. Installation instructions
+# 2.3. Installation instructions
 
 Download all the files from link provided in previous section. Unzip them all into one directory, shell command for unzipping:
 
@@ -38,7 +38,7 @@ If unzip library is not installed on your system, run:
 Files  being in another directory may cause necessity to provide absolute path to them.
 No installation is required, script is interpreted by shell built-in interpreter. Program can be run from terminal.
 
-#2.3.1. Required libraries
+# 2.3.1. Required libraries
 
 Matplotlib - library is required for grapher.py to draw charts. Installation can be run by:
 
@@ -48,14 +48,14 @@ Matplotlib - library is required for grapher.py to draw charts. Installation can
 
 Requests -  required for http server. Installation instruction on: http://docs.python-requests.org/en/master/
 
-#3. User interface
-#3.1. Introduction
+# 3. User interface
+# 3.1. Introduction
 
 By now you should have MOPS Power Control application ready to work on your computer. In the next chapters we will explore:
 How to use basic MOPS Power Control features.
 How to change configuration of MOPS Power Control to set different rules for working algorithm
 
-#3.2. Start MOPS Power Control
+# 3.2. Start MOPS Power Control
 
 You can start MOPS Power Control application from your shell using command:
 
@@ -64,7 +64,7 @@ cat input.txt | python pc.py
 TIP
 When starting MOPS Power Control it is possible to specify optional settings using a command line. See Section 3.5. "Additional features" for details
 
-#3.3. Input
+# 3.3. Input
 
 Algorithm takes input through stdin. Required input line is structured this way:
 
@@ -77,7 +77,7 @@ XL	XX	XXXX	num1	num2
     Num1 - power level
     Num2 - quality level
 
-#3.3.1. Configuration
+# 3.3.1. Configuration
 
 Algorithm has default configuration parameters:
 
@@ -95,7 +95,7 @@ Algorithm has default configuration parameters:
 
 These settings can be customized. Customization process is described in section                3.5. “Additional Features”.
 
-#3.4. Output
+# 3.4. Output
 
 There are few options for getting an output. Script output is printed by default in standard output in a terminal:
 
@@ -106,24 +106,24 @@ There are few options for getting an output. Script output is printed by default
     UL    S0      MS222    NCH
 
 
-#3.4.1. Printing the output to a file
+# 3.4.1. Printing the output to a file
 
 Commands are always printed in terminal, they can be also redirected to a file by using file_name at the end of a terminal command:
 
     cat input.txt | python pc.py > output.txt
 
-#3.4.2. Database
+# 3.4.2. Database
 
 
 Measurement data is stored in database directly, or through http server if one is set up. See section 3.5.5. “HTTP communication” for details.
 
-#3.4.3.Graphic output
+# 3.4.3.Graphic output
 
 There is a possibility to visualize measurement data for specified mobile station, See section 3.5.4. “Plotter” for details.
 
-#3.5. Additional features
+# 3.5. Additional features
 
-#3.5.1. User configuration
+# 3.5.1. User configuration
 
 User is able to override default configuration of an algorithm. To do so, additional flag should be Flag: -c
 
@@ -133,7 +133,7 @@ User is able to override default configuration of an algorithm. To do so, additi
 
 Feature description: Overrides default configuration with one specified in conf.cfg file. Detailed information related to changing configurable parameters are included inside this file.
 
-#3.5.2. Handover
+# 3.5.2. Handover
 
 Handover algorithm:
 Flag: -h
@@ -144,7 +144,7 @@ Flag: -h
 
 Feature description: When neighbour cell measurement received, algorithm is comparing signal power of S0 cell with signal power of neighbour. Sends HOBC (Handover Better Cell) signal if handover is profitable.
 
-#3.5.3. Debugger
+# 3.5.3. Debugger
 
 Flag: -d
 
@@ -164,7 +164,7 @@ Feature description: Creates log for debugging purposes in logdeb.txt. Debugger 
     Average quality:1.61
     Command sent: UL   S0 MS776  NCH
 
-#3.5.4. Plotter
+# 3.5.4. Plotter
 
 Flag: none - plotter is a separate application, using data in database to visualize history of power levels downlink and uplink for certain mobile station in specified time window.
 
@@ -188,7 +188,7 @@ Plotter uses matplotlib library, which must be downloaded previously.
 
 
 
-#3.5.5 HTTP communication
+# 3.5.5 HTTP communication
 
 To establish Http server user need to launch it before launching whole application.
 
@@ -201,7 +201,7 @@ To establish Http server user need to launch it before launching whole applicati
 
 It may happen that your environment doesn’t have requests lib which is necessary for properly working HTTP communication. To get requests lib please find attached producent website: http://docs.python-requests.org/en/master/
 
-#3.5.6 Parser to analyze TCPDUMP
+# 3.5.6 Parser to analyze TCPDUMP
 
 Flag: none - parser is a separate application, using data from tcpdump aplication to visualize history of communication with HTTP server.
 
@@ -213,7 +213,7 @@ Flag: none - parser is a separate application, using data from tcpdump aplicatio
     tcpdump -A -v -i <interface> > <file_name>
     python3 ana.py <file_name>
 
-#4. Reporting problems
+# 4. Reporting problems
 
 If you encounter any issues with MOPS Power Control, please report them to our project manager at: patryk.bogusz@ust-global.com
 
