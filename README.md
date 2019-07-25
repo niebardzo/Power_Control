@@ -213,10 +213,3 @@ Flag: none - parser is a separate application, using data from tcpdump applicati
     tcpdump -A -v -i <interface> > <file_name>
     python3 ana.py <file_name>
 
-# 4. Reporting problems
-
-If you encounter any issues with MOPS Power Control, please report them to our project manager at patryk.bogusz@ust-global.com
-
-
-
-
